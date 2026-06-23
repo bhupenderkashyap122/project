@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Background Remover</title>
+</head>
+<body>
+
+<h2>Background Remover & Color Changer</h2>
+
+<form action="/remove" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+
+    <br><br>
+
+    <label>Select Background Color:</label>
+    <input type="color" name="bgcolor" value="#ffffff">
+
+    <br><br>
+
+    <button type="submit">Remove Background</button>
+</form>
+
+{% if result %}
+<hr>
+
+<h3>Result</h3>
+
+<img src="{{ url_for('static', filename=result) }}" width="400">
+
+<br><br>
+
+<a href="{{ url_for('static', filename=result) }}" download="edited_image.png">
+    <button>Download Image</button>
+</a>
+
+{% endif %}
+
+</body>
+</html>
