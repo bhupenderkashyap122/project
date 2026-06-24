@@ -1,39 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Background Remover</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background Remover</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#333;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#444;
+}
+
+input[type="file"]{
+    width:100%;
+    padding:12px;
+    border:2px dashed #ccc;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+input[type="color"]{
+    width:100%;
+    height:50px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    background:#667eea;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#5568d9;
+}
+
+.result-section{
+    margin-top:30px;
+    text-align:center;
+}
+
+.result-section h3{
+    margin-bottom:15px;
+    color:#333;
+}
+
+.result-section img{
+    width:100%;
+    max-width:400px;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+}
+
+.download-btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:12px 20px;
+    background:#28a745;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.download-btn:hover{
+    background:#218838;
+}
+
+@media (max-width:600px){
+    .container{
+        padding:20px;
+    }
+
+    h2{
+        font-size:22px;
+    }
+
+    .btn,
+    .download-btn{
+        font-size:15px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-<h2>Background Remover & Color Changer</h2>
+<div class="container">
 
-<form action="/remove" method="POST" enctype="multipart/form-data">
-    <input type="file" name="image" required>
+    <h2>🖼 Background Remover & Color Changer</h2>
 
-    <br><br>
+    <form action="/remove" method="POST" enctype="multipart/form-data">
 
-    <label>Select Background Color:</label>
-    <input type="color" name="bgcolor" value="#ffffff">
+        <div class="form-group">
+            <label>Upload Image</label>
+            <input type="file" name="image" required>
+        </div>
 
-    <br><br>
+        <div class="form-group">
+            <label>Select Background Color</label>
+            <input type="color" name="bgcolor" value="#ffffff">
+        </div>
 
-    <button type="submit">Remove Background</button>
-</form>
+        <button type="submit" class="btn">
+            Remove Background
+        </button>
 
-{% if result %}
-<hr>
+    </form>
 
-<h3>Result</h3>
+    {% if result %}
+    <div class="result-section">
 
-<img src="{{ url_for('static', filename=result) }}" width="400">
+        <hr style="margin:25px 0;">
 
-<br><br>
+        <h3>Processed Image</h3>
 
-<a href="{{ url_for('static', filename=result) }}" download="edited_image.png">
-    <button>Download Image</button>
-</a>
+        <img src="{{ url_for('static', filename=result) }}" alt="Result Image">
 
-{% endif %}
+        <br>
+
+        <a href="{{ url_for('static', filename=result) }}"
+           download="edited_image.png"
+           class="download-btn">
+            Download Image
+        </a>
+
+    </div>
+    {% endif %}
+
+</div>
 
 </body>
 </html>
